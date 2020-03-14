@@ -12,7 +12,7 @@ name: newifi3_d2
 on:
   push:
     branches: 
-      - master
+      - dev-19.07
   #     ↑↑↑ 改成你的分支名, 一般是master
   schedule:
     - cron: 0 20 * * *
@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
         with:
-          ref: master
+          ref: dev-19.07
         #      ↑↑↑ 改成你的分支名, 一般是master
 
       - name: Initialization environment
