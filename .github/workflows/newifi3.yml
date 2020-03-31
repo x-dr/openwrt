@@ -14,8 +14,8 @@ on:
     branches: 
       - dev-19.07
   #     ↑↑↑ 改成你的分支名, 一般是master
-  schedule:
-    - cron: 0 20 * * *
+ # schedule:
+  #  - cron: 0 20 * * *
   # release:
   #   types: [published]
 
