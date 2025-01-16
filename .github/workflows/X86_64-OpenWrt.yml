@@ -27,7 +27,7 @@ env:
 
 jobs:
   Toolchain:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     outputs:
       OPENWRT_PATH: ${{ steps.clone.outputs.OPENWRT_PATH }}
@@ -163,7 +163,7 @@ jobs:
 
   Build:
     needs: [Toolchain]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     env:
       OPENWRT_PATH: ${{ needs.Toolchain.outputs.OPENWRT_PATH }}
