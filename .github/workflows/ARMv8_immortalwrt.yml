@@ -191,7 +191,7 @@ jobs:
 
     - name: Upload Bin Directory
       if: steps.compile.conclusion == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ env.SOURCE_REPO }}-${{ env.LITE_BRANCH }}-${{ env.DEVICE_TARGET }}-bin-${{ env.FILE_DATE }}
         path: ${{ env.OPENWRT_PATH }}/bin
