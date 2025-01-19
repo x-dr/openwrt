@@ -45,7 +45,7 @@ OUTDIR=${PWD}/output
 mkdir -p "$TMPDIR" && gzip -dc ${SRC_IMG} | ( cd "$TMPDIR" && tar xf - && rm -rf ./lib/firmware/* && rm -rf ./lib/modules/*)
 
 [ -x $TMPDIR/bin/bash ] && \
-	cp -f files/docker/30-sysinfo.sh $TMPDIR/etc/profile.d/ && \
+	cp -f docker/patches/30-sysinfo.sh $TMPDIR/etc/profile.d/ && \
 	sed -e "s/\/bin\/ash/\/bin\/bash/" -i $TMPDIR/etc/passwd && \
 	sed -e "s/\/bin\/ash/\/bin\/bash/" -i $TMPDIR/usr/libexec/login.sh
 
@@ -62,12 +62,12 @@ cat >> $TMPDIR/etc/sysupgrade.conf <<EOF
 /root/.ssh/
 EOF
 
-cp -f files/docker/rc.local "$TMPDIR/etc/" && \
-cp -f files/99-custom.conf "$TMPDIR/etc/sysctl.d/" && \
-cp -f files/cpustat "$TMPDIR/usr/bin/" && chmod 755 "$TMPDIR/usr/bin/cpustat" && \
-cp -f files/getcpu "$TMPDIR/bin/" && chmod 755 "$TMPDIR/bin/getcpu" && \
-cp -f files/coremark.sh "$TMPDIR/etc/" && chmod 755 "$TMPDIR/etc/coremark.sh"
-cp -f files/kmod "$TMPDIR/sbin/" && \
+cp -f docker/patches/rc.local "$TMPDIR/etc/" && \
+cp -f docker/patches/99-custom.conf "$TMPDIR/etc/sysctl.d/" && \
+cp -f docker/patches/cpustat "$TMPDIR/usr/bin/" && chmod 755 "$TMPDIR/usr/bin/cpustat" && \
+cp -f docker/patches/getcpu "$TMPDIR/bin/" && chmod 755 "$TMPDIR/bin/getcpu" && \
+cp -f docker/patches/coremark.sh "$TMPDIR/etc/" && chmod 755 "$TMPDIR/etc/coremark.sh"
+cp -f docker/patches/kmod "$TMPDIR/sbin/" && \
 	(
             cd $TMPDIR/sbin && \
 		 chmod 755 kmod && \
@@ -83,9 +83,9 @@ for p in `echo files/index.html.patches/*.patch`;do
     cat $p | (cd "$TMPDIR/" && patch -p1 && find . -name '*.orig' -exec rm {} \; && find . -name '*.rej' -exec rm {} \;)
 done
 
-cat files/docker/init.d_turboacc.patch | (cd "$TMPDIR/" && patch -p1 )
-if ! cat files/docker/cbi_turboacc_new.patch | (cd "$TMPDIR/" && patch -p1 );then
-    cat files/docker/cbi_turboacc.patch | (cd "$TMPDIR/" && patch -p1 )
+cat docker/patches/init.d_turboacc.patch | (cd "$TMPDIR/" && patch -p1 )
+if ! cat docker/patches/cbi_turboacc_new.patch | (cd "$TMPDIR/" && patch -p1 );then
+    cat docker/patches/cbi_turboacc.patch | (cd "$TMPDIR/" && patch -p1 )
     ( find "$TMPDIR" -name '*.rej' -exec rm {} \; 
       find "$TMPDIR" -name '*.orig' -exec rm {} \;
     )
