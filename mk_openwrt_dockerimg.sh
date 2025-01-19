@@ -6,12 +6,12 @@
 #
 # 脚本可以代入2个参数：　          [img_name]              [tag]
 # 例如：./mk_openwrt_dockerimg.sh  myname/openwrt-aarch64  latest
-# 如果不填命令行参数的话，默认镜像名称是　unifreq/openwrt-aarch64:latest
+# 如果不填命令行参数的话，默认镜像名称是　gindex/openwrt-aarch64:latest
 #
 # build成功后，用 docker images可以看到生成的镜像
 # 并且会打包成本地镜像： ${OUTDIR}/docker-img-openwrt-aarch64-${TAG}.gz (可以用docker loader 命令导入)
 
-IMG_NAME=unifreq/openwrt-aarch64
+IMG_NAME=gindex/openwrt-aarch64
 TAG=latest
 if [ ! -z "$1" ];then
     IMG_NAME=$1
