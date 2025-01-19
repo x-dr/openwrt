@@ -1,4 +1,4 @@
-name: build armv8 openwrt
+name: build ARMv8 immortalwrt
 
 on:
 #  schedule: [cron: 30 14 */3 * *]
