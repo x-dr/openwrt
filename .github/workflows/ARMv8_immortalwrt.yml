@@ -1,4 +1,4 @@
-name: build ARMv8 immortalwrt
+name: build armv8 immortalwrt
 
 on:
 #  schedule: [cron: 30 14 */3 * *]
@@ -76,46 +76,6 @@ jobs:
       TZ: Asia/Shanghai
 
     steps:
-
-    - name: Before freeing up disk space
-      run: |
-        echo "Before freeing up disk space"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
-
-    - name: "Optimize Disk Space"
-      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
-      with:
-        operate_sudo: "True"
-        general_include: ".+"
-        general_exclude: |-
-          ^GCC$
-          ^G\+\+$
-          Clang
-          LLVM
-        docker_include: ".+"
-        docker_prune: "True"
-        docker_clean: "True"
-        apt_prune: "True"
-        apt_clean: "True"
-        homebrew_prune: "True"
-        homebrew_clean: "True"
-        npm_prune: "True"
-        npm_clean: "True"
-        os_swap: "True"
-
-    - name: Freeing up disk space
-      uses: easimon/maximize-build-space@master
-      with: 
-        root-reserve-mb: 2048
-        swap-size-mb: 1
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
-        remove-codeql: 'true'
-        remove-docker-images: 'true'
-
     - name: Checkout
       uses: actions/checkout@main
 
@@ -150,6 +110,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        docker rmi $(docker images -q)
         sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android $AGENT_TOOLSDIRECTORY
         sudo swapoff -a && sudo rm -f /swapfile /mnt/swapfile
         sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
@@ -242,10 +203,7 @@ jobs:
         OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*rootfs.tar.gz
         KERNEL_REPO_URL: ophub/kernel
         KERNEL_USAGE: flippy
-        PACKAGE_SOC: diy
-        SCRIPT_DIY: mk_openwrt_dockerimg.sh
-        SCRIPT_DIY_PATH: mk_openwrt_dockerimg.sh
-        # PACKAGE_SOC: s905d_s905x3
+        PACKAGE_SOC: s905d_s905x3
         KERNEL_VERSION_NAME: 6.1.y_6.6.y
         KERNEL_AUTO_LATEST: true
 
