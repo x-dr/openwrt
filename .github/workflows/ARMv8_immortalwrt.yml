@@ -196,19 +196,19 @@ jobs:
         name: ${{ env.SOURCE_REPO }}-${{ env.LITE_BRANCH }}-${{ env.DEVICE_TARGET }}-bin-${{ env.FILE_DATE }}
         path: ${{ env.OPENWRT_PATH }}/bin
 
-    - name: Packaging OpenWrt
-      if: steps.compile.conclusion == 'success'
-      uses: haiibo/flippy-openwrt-actions@main
-      env:
-        OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*rootfs.tar.gz
-        KERNEL_REPO_URL: ophub/kernel
-        KERNEL_USAGE: flippy
-        PACKAGE_SOC: diy
-        SCRIPT_DIY: mk_openwrt_dockerimg.sh
-        SCRIPT_DIY_PATH: mk_openwrt_dockerimg.sh
-        # PACKAGE_SOC: s905d_s905x3
-        KERNEL_VERSION_NAME: 6.1.y_6.6.y
-        KERNEL_AUTO_LATEST: true
+    # - name: Packaging OpenWrt
+    #   if: steps.compile.conclusion == 'success'
+    #   uses: haiibo/flippy-openwrt-actions@main
+    #   env:
+    #     OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*rootfs.tar.gz
+    #     KERNEL_REPO_URL: ophub/kernel
+    #     KERNEL_USAGE: flippy
+    #     PACKAGE_SOC: diy
+    #     SCRIPT_DIY: mk_openwrt_dockerimg.sh
+    #     SCRIPT_DIY_PATH: mk_openwrt_dockerimg.sh
+    #     # PACKAGE_SOC: s905d_s905x3
+    #     KERNEL_VERSION_NAME: 6.1.y_6.6.y
+    #     KERNEL_AUTO_LATEST: true
 
     - name: Organize Files
       if: env.PACKAGED_STATUS == 'success'
